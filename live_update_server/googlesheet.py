@@ -21,6 +21,7 @@ class GoogleSheetReader():
         self._reauth_client_if_expired()
 
         all_google_docs = self._client.openall()
+
         # TODO take doc name, for now just takes the most recently updated google doc
         all_google_docs.sort(key=lambda s: parse_gspread_date(s.updated), reverse=True)
         active_document = all_google_docs[0]
@@ -29,6 +30,17 @@ class GoogleSheetReader():
         for sheet in active_document.worksheets():
             if self._sheet_name == sheet.title:
                 return sheet
+    
+    def get_doc_id(self):
+        self._reauth_client_if_expired()
+        all_google_docs = self._client.openall()
+        
+        # TODO take doc name, for now just takes the most recently updated google doc
+
+        all_google_docs.sort(key=lambda s: parse_gspread_date(s.updated), reverse=True)
+        return all_google_docs[0].id
+
+        
 
     def _new_client(self):
         self._client_created = datetime.now()
