@@ -1,0 +1,28 @@
+
+/*
+	Styling for changing the rooms
+*/
+
+.unavailable {
+	/*stroke: #000000;*/
+	stroke-opacity: 0.0;
+	fill: #000000;
+	fill-opacity: 0.0;
+	stroke-width:2.02276468;
+}
+
+.available {
+	/*stroke: #00ff00;*/
+	stroke-opacity: 0.0;
+	fill: #00ff00;
+	fill-opacity: 0.4;
+	stroke-width:2.02276468;
+}
+
+.occupied {
+	/*stroke: #ff0000;*/
+	stroke-opacity: 0.0;
+	fill: #ff0000;
+	fill-opacity: 0.4;
+	stroke-width:2.02276468;
+}

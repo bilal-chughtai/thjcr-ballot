@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"> 
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1"> 
+	<title>
+		Ballot Live
+	</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript" src="scripts_new.js"></script> 
+
+</head>
+<body onload="loaded()">
+<div id="wrapper">
+	<div id="header_container"> 
+		<div id="header_text_container">
+			<h1 id="header_text"> Ballot Live </h1>
+			<div id="link_container">
+				<a id="document_link" href="https://docs.google.com/spreadsheets/d/REPLACE_THIS_WITH_KEY/edit#gid=1332293320" target="_blank">
+					Click here for spreadsheet
+				</a><br>
+				 <a href="logout">Logout</a>
+			</div>
+		</div>
+		
+	</div>
+	
+	<div id="sidebar">
+		<div id="sites_container">
+			<div class="site" onclick="loadSVG(this)" id="bbc_a">
+				<div class="site_name">
+					<h4> BBC A Floor </h4>
+				</div>
+				<!--
+					<input type="image" class="site_button" id="bbc-a-button" src="../thumbnails/bbc-a-thumb.jpg" onclick="loadSVG(&quot;bbc-a-floor-combined.svg&quot;)" />
+				-->
+			</div>
+			<div class="site" onclick="loadSVG(this)" id="bbc_b">
+				<div class="site_name">
+					<h4> BBC B Floor </h4>
+				</div>
+				<!--
+					<input type="image" class="site_button" id="bbc-b-button" src="../thumbnails/bbc-b-thumb.jpg" onclick="loadSVG(&quot;bbc-b-floor-combined.svg&quot;)" />
+				-->
+			</div>
+			<div class="site" onclick="loadSVG(this)" id="bbc_c">
+				<div class="site_name">
+					<h4> BBC C Floor </h4>
+
+				</div>
+			</div>
+			<div class="site" onclick="loadSVG(this)" id="cs_1">
+				<div class="site_name">
+					<h4> Central Site, First Floor </h4>
+
+				</div>
+			</div>
+			<div class="site" onclick="loadSVG(this)" id="cs_2">
+				<div class="site_name">
+					<h4> Central Site, Second Floor </h4>
+
+				</div>
+			</div>
+			<div class="site" onclick="loadSVG(this)" id="boho_a">
+				<div class="site_name">
+					<h4> Boho, A Floor </h4>
+
+				</div>
+			</div>
+			<div class="site" onclick="loadSVG(this)" id="boho_b">
+				<div class="site_name">
+					<h4> Boho, B Floor </h4>
+
+				</div>
+			</div>
+			<div class="site" onclick="loadSVG(this)" id="boho_c">
+				<div class="site_name">
+					<h4> Boho, C Floor </h4>
+
+				</div>
+			</div>
+			<div class="site" onclick="loadSVG(this)" id="new_build-a">
+				<div class="site_name">
+					<h4> New Build, A Stair </h4>
+
+				</div>
+			</div>
+			<div class="site" onclick="loadSVG(this)" id="new_build_e-f-g-h-i-j">
+				<div class="site_name">
+					<h4> New Build, E, F, G, H, I, J Stairs</h4>
+
+				</div>
+			</div>
+			<div class="site" onclick="loadSVG(this)" id="new_build_k-l-m-n-o-p">
+				<div class="site_name">
+					<h4> New Build, K, L, M, N, O, P Stairs </h4>
+
+				</div>
+			</div>
+			<div class="site" onclick="loadSVG(this)" id="wyng_a">
+				<div class="site_name">
+					<h4> Wyng Gardens, A Floor </h4>
+
+				</div>
+			</div>
+			<div class="site" onclick="loadSVG(this)" id="wyng_b">
+				<div class="site_name">
+					<h4> Wyng Gardens, B Floor </h4>
+
+				</div>
+			</div>
+			<div class="site" onclick="loadSVG(this)" id="wyng_c">
+				<div class="site_name">
+					<h4> Wyng Gardens, C Floor </h4>
+
+				</div>
+			</div>
+			<div class="site" onclick="loadSVG(this)" id="wyng_d">
+				<div class="site_name">
+					<h4> Wyng Gardens, D Floor </h4>
+
+				</div>
+			</div>			
+			<div class="site" onclick="loadSVG(this)" id="coote">
+				<div class="site_name">
+					<h4> Coote House </h4>
+
+				</div>
+			</div>	
+		</div>
+		<div id="updates_pane">
+			<!-- javascript will add  rows with class "update_row" -->
+					
+		</div>
+	</div>
+	
+	<div id="main">
+		<div id="control_group">
+			<input type="image" class="control_button" id="zoom_in" src="res/zoom_in.png" onclick="zoomIn()" />
+			<input type="image" class="control_button" id="zoom_out" src="res/zoom_out.png" onClick="zoomOut()" />
+			<input type="image" class="control_button" id="zoom_reset" src="res/refresh.gif" onClick="zoomReset()" />
+		<!--	
+			<input type="image" class="control_button" id="ccw_rotate" src="res/ccw_rotate.png" />
+			<input type="image" class="control_button" id="cw_rotate" src="res/cw_rotate.png" />
+		-->
+		</div>
+		
+		<div id="svg_container">
+			<object data="res/bbc-a-floor-combined.svg" type="image/svg+xml" id="svg_image" ></object>
+		</div>
+
+		<div id="tooltip" class="box">
+			<div id="room">
+			</div>
+			<div class="label"> Occupant </div> <div class="data"> <span id="occupant"> </span> <span id="crsid"> </span>  </div>
+			<div class="label"> Contract </div> <div class="data"> <span id="contract_type"> </span> </div>
+			<div class="label"> Rent </div> <div class="data"> <span id="rent"> </span> </div>
+			<div class="label"> Overall Cost </div> <div class="data"> <span id="total_cost_1"></span><div id="total_cost_2"></div><div id="total_cost_3"> </div> </div>
+			<div class="label"> Room type </div> <div class="data">  <span id="room_type"> </div>
+			<div class="label"> Floor </div> <div class="data">  <span id="floor"> </div>
+			<div class="label"> Notes </div> <div class="data">  <span id="notes"> </div>
+		</div>
+	</div>
+	
+</div>
+</body>
+</html>

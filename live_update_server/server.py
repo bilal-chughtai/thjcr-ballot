@@ -19,7 +19,7 @@ parser.add_argument("--google-sheet-name", requird=True, help="Name of the singl
 parser.add_argument("--sheet-format", required=True, help="Path to JSON file that defines the mapping of columns when reading document updates", type=str)
 parser.add_argument("--google-API-credentials", required=True, help="Path to JSON file with the Google Drive API secret that authorizes access to the sheet provided", type=str)
 parser.add_argument("--room-svg-id-to-room-name", required=True, help="Path to CSV file mapping SVG file room id to the name used in the Google Sheet", type=str)
-# TODO parameter for google sheet name
+# TODO parameter for google doc name
 
 args = parser.parse_args()
 
@@ -40,6 +40,9 @@ sheet_columns_format = json.load(open(args.sheet_format))['sheet_columns_mapping
 room_name_to_svg_id = RoomNameToSvgId(args.room_svg_id_to_room_name)
 
 sheet_reader = GoogleSheetReader(args.google_API_credentials, args.sheet_name)
+doc_title = args.google_doc_title
+sheet_name = args.google_sheet_name
+sheet = sheet_reader.get_sheet(doc_title, sheet_name)
 rooms = RoomDataParser(sheet_reader.get_sheet(), sheet_columns_format, room_name_to_svg_id.names_to_ids(), logger)
 
 try:
