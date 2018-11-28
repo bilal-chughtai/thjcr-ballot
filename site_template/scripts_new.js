@@ -313,10 +313,10 @@ function loadSVG(from) {
 
 	//adding some sort of timestamp forces browser to redraw image, otherwise wouldn't show up half the time (interesting)
 	// + "?time="+Date.now()
-	//DECISION: Adding it uses up much more bandwidth for each switch.
+	//DECISION: Adding it uses up much more bandwidth for each switch.res
 	//	On the other hand it seems to make firefox render the svg properly each time...
 	//	not sure if chrome has this issue
-	im.data = "res/" + sites[siteName].sitePlanRes; //CANNOT HAVE A PRECEDING SLASH (think regular unix)
+	im.data = "plans/" + sites[siteName].sitePlanRes; //CANNOT HAVE A PRECEDING SLASH (think regular unix)
 	// var notifier = document.getElementById(siteName).getElementsByClassName("site_name")[0].getElementsByClassName("indicator")[0];
 	// notifier.style.backgroundColor = "lightgreen";
 	// notifier.parentElement.title = "up to date";

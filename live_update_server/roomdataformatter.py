@@ -15,7 +15,7 @@ class RoomDataFormatter():
             info['status'] = "occupied" if RoomDataFormatter._room_taken(attrs) else "available"
             info['occupier'] = RoomDataFormatter._get_occupier(attrs)
             info['occupierCrsid'] = attrs['crsid']
-            info['roomPrice'] = RoomDataFormatter._get_weekly_rent(attrs)
+            info['roomPrice'] = RoomDataFormatter._get_weekly_rent(attrs)_get_weekly_rent
             info['contractType'] = attrs['license']
             info['roomType'] = attrs['roomType']
             info['fullCost'] = RoomDataFormatter._get_full_cost_string(attrs)

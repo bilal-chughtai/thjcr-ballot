@@ -36,7 +36,7 @@ class RoomDataParser():
             other_room_attrs = other_parsed_rooms[room]
 
             # compare all attrs
-            for attr, attr_value in room_attrs:
+            for attr, attr_value in room_attrs.items():
                 if attr_value != other_room_attrs[attr]:
                     return False
         return True
@@ -53,6 +53,7 @@ class RoomDataParser():
             # skip all invalid room names/unknown room names
             if room_name not in room_name_to_svg_id:
                 self._logger.log("Skipping room name `" + room_name + "`, not a (known or) valid room name, check mapping file")
+                continue
             
             room_id = room_name_to_svg_id[room_name]
             room_attributes = self._parse_sheet_row_to_room_attributes(row, columns_mapping)

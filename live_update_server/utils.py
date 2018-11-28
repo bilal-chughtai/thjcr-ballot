@@ -13,8 +13,8 @@ class NonRepeatingLogger():
 
     def log(self, msg):
         if msg in self._messages:
-            self._messages["count"] += 1
-            self._messages["most_recent_timestamp"] = datetime.now()
+            self._messages[msg]["count"] += 1
+            self._messages[msg]["most_recent_timestamp"] = datetime.now()
             new_message = False
             self._messages_elapsed_since_last_write += 1
         else:

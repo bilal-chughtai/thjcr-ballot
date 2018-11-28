@@ -31,7 +31,7 @@ def delete_directory(pathstring):
         shutil.rmtree(pathstring)
         print("\nDeleted {0}".format(pathstring))
     except FileNotFoundError as e:
-        print("\nSkipping deletion, directory does not exist".format(pathstring))
+        print("\nSkipping deletion, directory {0} does not exist".format(pathstring))
 
 
 
