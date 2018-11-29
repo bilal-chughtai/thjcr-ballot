@@ -6,12 +6,12 @@ import time
 import os
 import json
 
-from utils import NonRepeatingLogger
-from googlesheet import GoogleSheetReader
+from .utils import NonRepeatingLogger
+from .googlesheet import GoogleSheetReader
 # TODO decide better file naming for the following three
-from roomdataparser import RoomDataParser
-from roomdataformatter import RoomDataFormatter
-from nametosvgid import RoomNameToSvgId
+from .roomdataparser import RoomDataParser
+from .roomdataformatter import RoomDataFormatter
+from .nametosvgid import RoomNameToSvgId
 
 parser = argparse.ArgumentParser(description='Provide live updates for an instance of the THJCR ballot')
 parser.add_argument("--ballot-directory", required=True, help="Path to currently active ballot where this script has write permissions", type=str)

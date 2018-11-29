@@ -7,6 +7,8 @@ class RoomNameToSvgId():
             for mapping in mapping_file:
                 (svg_id, room_name) = mapping.split(',')
                 svg_id, room_name = svg_id.strip(), room_name.strip()
+                if len(room_name) == 0:
+                    continue
                 self._room_name_to_svg_id[room_name] = svg_id
 
     def get_all_room_names(self):

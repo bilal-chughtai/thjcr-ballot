@@ -118,8 +118,8 @@ function updateAll() {
         }
     }
         
-    httpRequest.open("GET", "data/data.json", true);
-    httpRequest.send();
+    request.open("GET", "data/data.json", true);
+    request.send();
 }
 
 function updateSite(site) {

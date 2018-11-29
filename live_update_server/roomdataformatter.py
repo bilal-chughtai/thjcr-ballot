@@ -1,4 +1,4 @@
-from roomdataparser import RoomDataParser
+from .roomdataparser import RoomDataParser
 
 class RoomDataFormatter():
     """ Consumes a known shape of Room data and produces json expected on the client side """
@@ -15,7 +15,7 @@ class RoomDataFormatter():
             info['status'] = "occupied" if RoomDataFormatter._room_taken(attrs) else "available"
             info['occupier'] = RoomDataFormatter._get_occupier(attrs)
             info['occupierCrsid'] = attrs['crsid']
-            info['roomPrice'] = RoomDataFormatter._get_weekly_rent(attrs)_get_weekly_rent
+            info['roomPrice'] = RoomDataFormatter._get_weekly_rent(attrs)
             info['contractType'] = attrs['license']
             info['roomType'] = attrs['roomType']
             info['fullCost'] = RoomDataFormatter._get_full_cost_string(attrs)

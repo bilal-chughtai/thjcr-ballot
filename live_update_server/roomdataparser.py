@@ -71,4 +71,5 @@ class RoomDataParser():
 				room_attributes[attribute] = ''      #but this attr may be hard coded in somewhere...
             else:
                 room_attributes[attribute] = row[attribute_index]
+        print(room_attributes)
         return room_attributes
