@@ -6,12 +6,17 @@ import time
 import os
 import json
 
-from .utils import NonRepeatingLogger
-from .googlesheet import GoogleSheetReader
+from live_update_server.utils import NonRepeatingLogger
+from live_update_server.googlesheet import GoogleSheetReader
 # TODO decide better file naming for the following three
-from .roomdataparser import RoomDataParser
-from .roomdataformatter import RoomDataFormatter
-from .nametosvgid import RoomNameToSvgId
+from live_update_server.roomdataparser import RoomDataParser
+from live_update_server.roomdataformatter import RoomDataFormatter
+from live_update_server.nametosvgid import RoomNameToSvgId
+# from .utils import NonRepeatingLogger
+# from .googlesheet import GoogleSheetReader
+# from .roomdataparser import RoomDataParser
+# from .roomdataformatter import RoomDataFormatter
+# from .nametosvgid import RoomNameToSvgId
 
 parser = argparse.ArgumentParser(description='Provide live updates for an instance of the THJCR ballot')
 parser.add_argument("--ballot-directory", required=True, help="Path to currently active ballot where this script has write permissions", type=str)
@@ -43,7 +48,7 @@ sheet_reader = GoogleSheetReader(args.google_API_credentials)
 doc_title = args.google_doc_title
 sheet_name = args.google_sheet_name
 sheet = sheet_reader.get_sheet(doc_title, sheet_name)
-rooms = RoomDataParser(sheet, sheet_columns_format, room_name_to_svg_id.names_to_ids(), logger)
+rooms = None
 
 try:
     os.mkdir(os.path.join(args.ballot_directory, "data"))

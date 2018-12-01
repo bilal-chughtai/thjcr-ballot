@@ -15,6 +15,8 @@ class RoomDataParser():
     
     def __eq__(self, other_parsed_sheet):
         """ This lets us use `sheet_one != sheet_two` to check if there has been a change in the sheets """
+        if other_parsed_sheet is None:
+            return False
         if not isinstance(other_parsed_sheet, RoomDataParser):
             raise Exception("Cannot call == on a RoomDataParser and a non-RoomDataParser")
         
@@ -66,10 +68,9 @@ class RoomDataParser():
             attribute_index = columns_mapping[attribute]
 
             # ignore attributes that have been given a -1 index, ie. ignore this attribute
-            if attribute_index == -1: 	        # signal values to ignore
+            if attribute_index == -1:       # signal values to ignore
                 # TODO remove this hardcoded attribute if allowed by the frontend requirements
-				room_attributes[attribute] = ''      #but this attr may be hard coded in somewhere...
+                room_attributes[attribute] = ''      #but this attr may be hard coded in somewhere...
             else:
                 room_attributes[attribute] = row[attribute_index]
-        print(room_attributes)
         return room_attributes

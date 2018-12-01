@@ -1,4 +1,4 @@
-from .roomdataparser import RoomDataParser
+from live_update_server.roomdataparser import RoomDataParser
 
 class RoomDataFormatter():
     """ Consumes a known shape of Room data and produces json expected on the client side """
@@ -26,9 +26,9 @@ class RoomDataFormatter():
 
     @staticmethod
     def _room_taken(room_attrs):
-		if room_attrs['surname'].strip() == "" and room_attrs['name'].strip() == "":
-			return False
-		return True
+        if room_attrs['surname'].strip() == "" and room_attrs['name'].strip() == "":
+            return False
+        return True
     
     @staticmethod
     def _get_occupier(room_attrs):
