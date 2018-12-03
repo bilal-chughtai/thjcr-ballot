@@ -18,7 +18,7 @@ class NonRepeatingLogger():
             new_message = False
             self._messages_elapsed_since_last_write += 1
         else:
-            print(msg)
+            print(msg + " - please check the log file")
             self._messages[msg] = {"count": 1, "most_recent_timestamp": datetime.now()}
             new_message = True
 
