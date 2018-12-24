@@ -1,18 +1,16 @@
 # thjcr-ballot
-Everything needed to run the TH jcr ballot, minus the floor plans and the Google API private key.
+Everything needed to run the Trinity Hall JCR ballot visualization, minus the floor plans and the Google API private key. Contact me or previous webmasters for them.
 
 
 ## Usage
 
-Clone this repository to a NON-PUBLIC location on your server. If using SRCF and your home directory is `home/xx123/`, this is as good a place as any. You will need access to the `thjcr` society if you plan on putting the ballot on the TH jcr website. In 2017, we were using `~/thjcr/public_html/Ballot-Viz/` to host the files for this system.
+Clone this repository to a NON-PUBLIC location on your server. If using SRCF and your home directory is `home/xx123/`, this is as good a place as any. You will need access to the `thjcr` society if you plan on putting the ballot on the Trinity Hall JCR website. In 2017, we were using `~/thjcr/public_html/Ballot-Viz/` to host the files for this system.
 
-You'll also need to get a copy of the annotated floor plans (SVG) from myself or the prior webmaster, as well as the Google API secret credentials (private key), and put them somewhere _NON-PUBLIC_ (regarding floor plans, I'm not sure if they can be public so this is just to play it safe). You may be able to find these non-public files on the SRCF server from the prior year.
-
--------
+You'll also need to get a copy of the annotated floor plans (SVG) from myself or the prior webmaster, as well as the Google API secret credentials (private key), and put them somewhere _NON-PUBLIC_ (regarding floor plans, I'm not sure if they can be public, so this is just to play it safe). You may be able to find these private files on the SRCF server from the prior year. *Also change the permissions of the folder containing these documents so that only members of thjcr can read the folder*.
 
 1. Clone this repository to a non-public directory, obtain the annotated floor plan SVGs, and the Google API secret.
 
-2. Share the ballot document google sheet with `gdoc-editor@thjcr-ballot-system.iam.gserviceaccount.com`
+2. Share the ballot document google sheet with `gdoc-editor@thjcr-ballot-system.iam.gserviceaccount.com`, which gives this system access to the google doc.
 
 3. Create a new ballot:
 
@@ -21,8 +19,7 @@ Then execute:
 
 ```
 python3 -m create_ballot 
-    --year 2019 
-    --output-directory ~/thjcr/public_html/Ballot-Viz
+    --ballot-directory ~/thjcr/public_html/Ballot-Viz/2019
     --google-API-credentials ~/balloting/google_api_secret.json
     --google-doc-title "Ballot-Room-Document-2017.xlsx" 
     --floor-plan-svgs-directory ~/balloting/plans/
@@ -34,6 +31,7 @@ To get the live-updates, this time we also need to provide the specific sheet of
 and specify which columns to read from with the `--sheet-format` parameter, and the mapping from room names in the Google Sheet 
 to the ID of the room in the floor plan SVG files using the `--room-svg-id-to-room-name` parameter
 
+
 ```
 python 3 -m live_update_server.server
     --ballot-directory ~/thjcr/public_html/Ballot-Viz/2019
@@ -43,7 +41,6 @@ python 3 -m live_update_server.server
     --sheet-format live_update_server/resources/google-sheet-format.json
     --room-svg-id-to-room-name live_update_server/resources/room_id_mapping.csv
 ```
-
 
 ## Tmux for live update server
 You'll need to use `screen` or `tmux` to leave the live update server running while you're not logged in.
@@ -63,3 +60,4 @@ To go back and shut down the server
 3. Kill the server (`CTRL + c`)
 4. Kill the tmux session: `tmux kill-session`
 5. Log out of the sever if you want.
+

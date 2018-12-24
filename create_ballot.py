@@ -5,8 +5,8 @@ import shutil
 from live_update_server.googlesheet import GoogleSheetReader
 
 parser = argparse.ArgumentParser(description="Create a copy of the ballot into a specified location. The files may then be updated by executing `live_update_server/server.py`, ")
-parser.add_argument("--year", required=True, help="The year of the ballot being run (becomes folder name", type=int)
-parser.add_argument("--output-directory", required=True, help="Where to create ballot directory and copy files into (on SRCF, this will be something like thjcr/Ballot-Viz/). With the new code structure as of late 2018, we no longer need to store all the code & ballot files in the same place, so thjcr/Ballot-Viz directory can have just 2018, 2019...")
+-parser.add_argument("--year", required=True, help="The year of the ballot being run (becomes folder name", type=int)
+-parser.add_argument("--output-directory", required=True, help="Where to create ballot directory and copy files into (on SRCF, this will be something like thjcr/Ballot-Viz/). With the new code structure as of late 2018, we no longer need to store all the code & ballot files in the same place, so thjcr/Ballot-Viz directory can have just 2018, 2019...")
 parser.add_argument("--google-API-credentials", required=True, help="Path to JSON file with the Google Drive API secret (aka credentials) that authorizes access google sheets that have been shared to the account", type=str)
 parser.add_argument("--no-delete-existing", dest="delete_existing", action="store_false", help="Don't delete existing ballot directory if present already")
 parser.add_argument("--delete-existing", dest="delete_existing", action="store_true", help="(default) delete existing ballot directory if present")
@@ -37,7 +37,6 @@ def delete_directory(pathstring):
 
 args = parser.parse_args()
 ballot_directory = os.path.join(args.output_directory, str(args.year))
-
 
 sheet_reader = GoogleSheetReader(args.google_API_credentials)
 google_doc_id = sheet_reader.get_doc_id(args.google_doc_title.strip())
