@@ -4,19 +4,20 @@ Everything needed to run the TH jcr ballot, minus the floor plans and the Google
 
 ## Usage
 
-Clone this repository to a NON-PUBLIC location on your server. If using SRCF and your home directory is `home/xx123/`, this is as good a place as any. You will need access to the `thjcr` society if you plan on putting the ballot on the TH jcr website. In 2017, we were using `~/thjcr/public_html/Ballot-Viz/` to host the actual files.
+Clone this repository to a NON-PUBLIC location on your server. If using SRCF and your home directory is `home/xx123/`, this is as good a place as any. You will need access to the `thjcr` society if you plan on putting the ballot on the TH jcr website. In 2017, we were using `~/thjcr/public_html/Ballot-Viz/` to host the files for this system.
 
-You'll also need to get a copy of the annotated floor plans (SVG) from myself or the prior webmaster, as well as the Google API secret credentials (private key), and put them somewhere _NON-PUBLIC_ (regarding floor plans, I'm not sure if they can be public so this is just to play it safe).
+You'll also need to get a copy of the annotated floor plans (SVG) from myself or the prior webmaster, as well as the Google API secret credentials (private key), and put them somewhere _NON-PUBLIC_ (regarding floor plans, I'm not sure if they can be public so this is just to play it safe). You may be able to find these non-public files on the SRCF server from the prior year.
 
 -------
 
-0. Clone this repository to a non-public directory, obtain the annotated floor plan SVGs, and the Google API secret.
+1. Clone this repository to a non-public directory, obtain the annotated floor plan SVGs, and the Google API secret.
 
-1. Share the Google doc with `TODO`
+2. Share the ballot document google sheet with `gdoc-editor@thjcr-ballot-system.iam.gserviceaccount.com`
 
-2. Create a new ballot
+3. Create a new ballot:
 
-Let's say we wish to create a ballot for 2019, and it should live under `~/thjcr/public_html/Ballot-Viz`. You have the floor plan SVGs under `~/balloting/plans/`, and the Google API secret `.json` under `~/balloting/google_api_secret.json`. Lets also assume the name of the google doc containing the balloting spreadsheet is "Ballot-Room-Document-2017.xlsx" Then execute:
+Let's say we wish to create a ballot for 2019, and it should live under `~/thjcr/public_html/Ballot-Viz/`. You have the floor plan SVGs under `~/balloting/plans/`, and the Google API secret `.json` under `~/balloting/google_api_secret.json`. Lets also assume the name of the google doc containing the balloting spreadsheet is "Ballot-Room-Document-2017.xlsx".
+Then execute:
 
 ```
 python3 -m create_ballot 
@@ -27,4 +28,38 @@ python3 -m create_ballot
     --floor-plan-svgs-directory ~/balloting/plans/
 ```
 
-3. Run the server to update the ballot when it needs to be update on the fly
+4. Run the server to generate live updates. You probably only need to leave this running couple days/weeks the ballot is actually being changed. (See next section `"Tmux"` on how to do this best).
+
+To get the live-updates, this time we also need to provide the specific sheet of the google sheet to read from,
+and specify which columns to read from with the `--sheet-format` parameter, and the mapping from room names in the Google Sheet 
+to the ID of the room in the floor plan SVG files using the `--room-svg-id-to-room-name` parameter
+
+```
+python 3 -m live_update_server.server
+    --ballot-directory ~/thjcr/public_html/Ballot-Viz/2019
+    --google-API-credentials ~/balloting/google_api_secret.json
+    --google-doc-title "Ballot-Room-Document-2017.xslx"
+    --google-sheet-name "somesheet"
+    --sheet-format live_update_server/resources/google-sheet-format.json
+    --room-svg-id-to-room-name live_update_server/resources/room_id_mapping.csv
+```
+
+
+## Tmux for live update server
+You'll need to use `screen` or `tmux` to leave the live update server running while you're not logged in.
+I recommend `tmux`, especially since its available on the SRCF server as well.
+
+Basic usage you'll need
+
+1. Log into server, navigate to this directory, and create the ballot if it doesn't already exist.
+2. Start tmux. You can use `tmux new -s ballot2019`
+3. Once inside the tmux session, run the command from Step 4 in the prior section
+4. Detach from tmux (this will essentially leave it running in the background) by pressing the `CTRL + d` key combination.
+5. You can now log out of the server if you want.
+
+To go back and shut down the server
+1. Log into server
+2. Re-attach to the tmux session: `tmux a -t ballot2019`
+3. Kill the server (`CTRL + c`)
+4. Kill the tmux session: `tmux kill-session`
+5. Log out of the sever if you want.
