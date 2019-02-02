@@ -21,6 +21,7 @@ class RoomDataFormatter():
             info['fullCost'] = RoomDataFormatter._get_full_cost_string(attrs)
             info['floor'] = attrs['floor']
             info['notes'] = attrs['notes']
+            info['lastUpdated'] = attrs['lastUpdated'] if 'lastUpdated' in attrs else 0.0
             json_room_data[room_id] = info
         return json_room_data
 

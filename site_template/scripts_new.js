@@ -93,7 +93,7 @@ function loaded() {
 	im.width = container.clientWidth;
 	loadSVG(document.getElementById(currentlySelected));
 	updateAll();
-	recurInterval = setInterval(updateAll, 50000);	
+	recurInterval = setInterval(updateAll, 30000);	
 }
 
 function updateAll() {
@@ -110,21 +110,18 @@ function updateAll() {
 
 // this gets called when we know the data has changed
 function updatedData(jsonData) {
+	roomsUpdated = {}
     for (let site in sites) {
-        let roomsUpdated = updateAndGetDifferencesFor(site, jsonData);
-		console.log("Rooms updated for site: " +site);
-		console.log(roomsUpdated);
-		if (Object.keys(roomsUpdated).length > 0) {
-			notify(roomsUpdated);
-			if (currentlySelected == site) {
-				updateSvgData(currentlySelected);
-			} else {
-				//var notifier = document.getElementById(site).getElementsByClassName("indicator")[0];
-				//notifier.style.backgroundColor = "blue";
-				//notifier.parentElement.title = "has changes";
-			}
+		siteRoomsUpdated = updateAndGetDifferencesFor(site, jsonData)
+		if (currentlySelected == site) {
+			updateSvgData(currentlySelected);
 		}
-    }
+		// merge all the changed rooms together to update the updates bar
+		Object.assign(roomsUpdated, siteRoomsUpdated);
+	}
+	if (Object.keys(roomsUpdated).length > 0) {
+		notify(roomsUpdated);
+	}
 }
 
 
@@ -159,7 +156,10 @@ function notify(roomDifferences) {
 	var newstatus = ""; //No idea if this help reduce number of variable allocations in javascript... probably optimizied away
 	var updatesPane = document.getElementById("updates_pane");
 
-	for (var roomId in roomDifferences) {
+	roomIds = Object.keys(roomDifferences);
+	sortedIdsByTime = roomIds.sort(function(a,b) { return roomDifferences[a].lastUpdated - roomDifferences[b].lastUpdated});
+	console.log(sortedIdsByTime);
+	for (let roomId of sortedIdsByTime) {
 		room = roomDifferences[roomId];
 		newstatus = room.status;
 		if (newstatus == "occupied") {

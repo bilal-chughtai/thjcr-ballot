@@ -1,6 +1,44 @@
-
-
 class RoomDataParser():
+    def __eq__(self, other_parsed_sheet):
+        """ This lets us use `sheet_one != sheet_two` to check if there has been a change in the sheets """
+        if other_parsed_sheet is None:
+            return False
+        if not isinstance(other_parsed_sheet, RoomDataParser):
+            raise Exception("Cannot call == on a RoomDataParser and a non-RoomDataParser")
+        
+        other_parsed_rooms = other_parsed_sheet.get_parsed_rooms()
+        num_other_rooms = len(other_parsed_rooms)
+        num_this_rooms = len(self.get_parsed_rooms())
+
+        # something has changed if number of rooms is different
+        if num_other_rooms != num_this_rooms:
+            return False
+
+        # we might need to check all the values of attributes otherwise
+        # could also do this with set opesrations over pairs/triples etc
+        for room in self.get_parsed_rooms():
+            if room not in other_parsed_rooms:
+                return False
+
+            room_attrs = self.get_parsed_rooms()[room]
+            other_room_attrs = other_parsed_rooms[room]
+
+            # compare all attrs
+            for attr, attr_value in room_attrs.items():
+                if attr_value != other_room_attrs[attr]:
+                    return False
+        return True
+
+    def get_parsed_rooms(self):
+        return {}
+
+class DummyRoomDataParser(RoomDataParser):
+    def __init__(self):
+        pass
+    def get_parsed_rooms(self):
+        return {}
+
+class GoogleRoomDataParser(RoomDataParser):
     """ Reads a Google Sheet and returns rows parsed into a dictionary form room name : { room attrs } """
 
     def __init__(self, gspread_sheet, sheet_columns_mapping, room_name_to_svg_id, logger):
@@ -11,37 +49,12 @@ class RoomDataParser():
 
     def get_parsed_rooms(self):
         return self._parsed_rooms
+    
+    def add_attribute(self, room_id, attribute, attribute_value):
+        self._parsed_rooms[room_id][attribute] = attribute_value
 
     
-    def __eq__(self, other_parsed_sheet):
-        """ This lets us use `sheet_one != sheet_two` to check if there has been a change in the sheets """
-        if other_parsed_sheet is None:
-            return False
-        if not isinstance(other_parsed_sheet, RoomDataParser):
-            raise Exception("Cannot call == on a RoomDataParser and a non-RoomDataParser")
-        
-        other_parsed_rooms = other_parsed_sheet.get_parsed_rooms()
-        num_other_rooms = len(other_parsed_rooms)
-        num_this_rooms = len(self._parsed_rooms)
-
-        # something has changed if number of rooms is different
-        if num_other_rooms != num_this_rooms:
-            return False
-
-        # we might need to check all the values of attributes otherwise
-        # could also do this with set opesrations over pairs/triples etc
-        for room in self._parsed_rooms:
-            if room not in other_parsed_rooms:
-                return False
-
-            room_attrs = self._parsed_rooms[room]
-            other_room_attrs = other_parsed_rooms[room]
-
-            # compare all attrs
-            for attr, attr_value in room_attrs.items():
-                if attr_value != other_room_attrs[attr]:
-                    return False
-        return True
+    
 
     def __ne__(self, other_parsed_sheet):
         """ For python2 compatibility """

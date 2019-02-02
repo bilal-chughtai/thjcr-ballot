@@ -9,7 +9,7 @@ import json
 from live_update_server.utils import NonRepeatingLogger
 from live_update_server.googlesheet import GoogleSheetReader
 # TODO decide better file naming for the following three
-from live_update_server.roomdataparser import RoomDataParser
+from live_update_server.roomdataparser import GoogleRoomDataParser,DummyRoomDataParser
 from live_update_server.roomdataformatter import RoomDataFormatter
 from live_update_server.nametosvgid import RoomNameToSvgId
 # from .utils import NonRepeatingLogger
@@ -49,7 +49,6 @@ sheet_reader = GoogleSheetReader(args.google_API_credentials)
 doc_title = args.google_doc_title
 sheet_name = args.google_sheet_name
 sheet = sheet_reader.get_sheet(doc_title, sheet_name)
-rooms = None
 
 try:
     os.mkdir(os.path.join(args.ballot_directory, "data"))
@@ -59,19 +58,30 @@ except OSError:
 output_file_path = os.path.join(args.ballot_directory, "data", "data.json")
 
 
+# fun add on functionality to maintain order of updates bar
+def put_updated_rooms_timestamps(new_rooms, old_rooms):
+    """ Does an in place modification to add timestampe attr. Just uses a local time rather than proper API """
+    # find all rooms that are different
+    attr = "lastUpdated"
+    new_data, old_data = new_rooms.get_parsed_rooms(), old_rooms.get_parsed_rooms()
+    for room_id in new_data:
+        new_room = new_data[room_id]
+        if room_id not in old_data or new_room['surname'].strip() != old_data[room_id]['surname'].strip():
+            new_rooms.add_attribute(room_id, attr, time.time())
 
-
+rooms = DummyRoomDataParser()
 while True:
     print("Polling sheet")
     
     # parse the sheet to into a local data format
     sheet = sheet_reader.get_sheet(doc_title, sheet_name)
-    new_rooms = RoomDataParser(sheet, sheet_columns_format, room_name_to_svg_id.names_to_ids(), logger)
+    new_rooms = GoogleRoomDataParser(sheet, sheet_columns_format, room_name_to_svg_id.names_to_ids(), logger)
 
     # see if it's different from what we parsed before
     if new_rooms != rooms:
         print("--changed detected")
         # if so, save it
+        put_updated_rooms_timestamps(new_rooms, rooms)
         rooms = new_rooms
         # convert local data format into JSON to send over write to file
         json_room_data = RoomDataFormatter.build_rooms_json(rooms)
@@ -79,5 +89,6 @@ while True:
         with open(output_file_path, 'w') as outfile:
             print("Writing new data file {0}".format(output_file_path))
             json.dump(json_room_data, outfile)
-    # sleep to not poll too often
-    time.sleep(4)
+    
+    # since this is only 1 connection, we can poll often
+    time.sleep(3)
