@@ -8,20 +8,20 @@ Clone this repository to a NON-PUBLIC location on your server. If using SRCF and
 
 You'll also need to get a copy of the annotated floor plans (SVG) from myself or the prior webmaster, as well as the Google API secret credentials (private key), and put them somewhere _NON-PUBLIC_ (regarding floor plans, I'm not sure if they can be public, so this is just to play it safe). You may be able to find these private files on the SRCF server from the prior year. *Also change the permissions of the folder containing these documents so that only members of thjcr can read the folder*.
 
-1. Clone this repository to a non-public directory, obtain the annotated floor plan SVGs, and the Google API secret.
+1. Clone this repository to a non-public directory, obtain the annotated floor plan SVGs, and the Google API secret. Also install `gspread` and `oauth2client`: `pip3 install gspread oauth2client`
 
 2. Share the ballot document google sheet with `gdoc-editor@thjcr-ballot-system.iam.gserviceaccount.com`, which gives this system access to the google doc.
 
 3. Create a new ballot:
 
-Let's say we wish to create a ballot for 2019, and it should live under `~/thjcr/public_html/Ballot-Viz/`. You have the floor plan SVGs under `~/balloting/plans/`, and the Google API secret `.json` under `~/balloting/google_api_secret.json`. Lets also assume the name of the google doc containing the balloting spreadsheet is "Ballot-Room-Document-2017.xlsx".
+Let's say we wish to create a ballot for 2019, and it should live under `~/thjcr/public_html/Ballot-Viz/`. You have the floor plan SVGs under `~/balloting/plans/`, and the Google API secret `.json` under `~/balloting/google_api_secret.json`. Lets also assume the name of the google doc containing the balloting spreadsheet is "Copy of Ballot-Room-Document-2017.xlsx".
 Then execute:
 
 ```
 python3 -m create_ballot 
     --ballot-directory ~/thjcr/public_html/Ballot-Viz/2019
     --google-API-credentials ~/balloting/google_api_secret.json
-    --google-doc-title "Ballot-Room-Document-2017.xlsx" 
+    --google-doc-title "Copy of Ballot-Room-Document-2017.xlsx" 
     --floor-plan-svgs-directory ~/balloting/plans/
 ```
 
@@ -33,13 +33,13 @@ to the ID of the room in the floor plan SVG files using the `--room-svg-id-to-ro
 
 
 ```
-python 3 -m live_update_server.server
+python3 -m live_update_server.server
     --ballot-directory ~/thjcr/public_html/Ballot-Viz/2019
     --google-API-credentials ~/balloting/google_api_secret.json
-    --google-doc-title "Ballot-Room-Document-2017.xslx"
+    --google-doc-title "Copy of Ballot-Room-Document-2017.xlsx"
     --google-sheet-name "somesheet"
-    --sheet-format live_update_server/resources/google-sheet-format.json
-    --room-svg-id-to-room-name live_update_server/resources/room_id_mapping.csv
+    --google-sheet-format live_update_server/resources/google-sheet-format.json
+    --room-svg-id-mapping live_update_server/resources/room_id_mapping.csv
 ```
 
 ## Tmux for live update server

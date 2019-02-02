@@ -6,95 +6,83 @@ var currentlySelected = "bbc_a";
 var sites  = {
 	"bbc_a" : {
 		sitePlanRes : 'bbc-a-floor-combined.svg',	//for loading plan 
-		roomData : [],
-		sitePrefixes : [{'prefix':"bbc_a", 'etag':-1}] //list of room ID prefixes in this site, corresponding to one remote .json
+		roomData : {},
+		sitePrefixes : ["bbc_a"] //list of room ID prefixes in this site, corresponding to one remote .json
 	},
 	"bbc_b" : {
 		sitePlanRes : 'bbc-b-floor-combined.svg',
-		roomData : [],
-		sitePrefixes : [{'prefix':"bbc_b", 'etag':-1}] //list of room ID prefixes in this site, corresponding to one remote .json
+		roomData : {},
+		sitePrefixes : ["bbc_b"] //list of room ID prefixes in this site, corresponding to one remote .json
 	},
 	"bbc_c" : {
 		sitePlanRes : 'bbc-c-floor-combined.svg',
-		roomData : [],
-		sitePrefixes : [{'prefix':"bbc_c", 'etag':-1}] //list of room ID prefixes in this site, corresponding to one remote .json
+		roomData : {},
+		sitePrefixes : ["bbc_c"] //list of room ID prefixes in this site, corresponding to one remote .json
 	},
 	"cs_1" : {
 		sitePlanRes : 'cs-first-floor-combined.svg',
-		etag : -1, //for caching
-		roomData : [],
-		sitePrefixes : [{'prefix':"cs_1", 'etag':-1}] //list of room ID prefixes in this site, corresponding to one remote .json
+		roomData : {},
+		sitePrefixes : ["cs_1"] //list of room ID prefixes in this site, corresponding to one remote .json
 	},
 	"cs_2" : {
 		sitePlanRes : 'cs-second-floor-combined.svg',
-		etag : -1, //for caching
-		roomData : [],
-		sitePrefixes : [{'prefix':"cs_2", 'etag':-1}] //list of room ID prefixes in this site, corresponding to one remote .json
+		roomData : {},
+		sitePrefixes : ["cs_2"] //list of room ID prefixes in this site, corresponding to one remote .json
 	},
 	"boho_a" : {
 		sitePlanRes : 'boho-a-floor-combined.svg',	
-		etag : -1, //for caching
-		roomData : [],
-		sitePrefixes : [{'prefix':"boho_a", 'etag':-1}] //list of room ID prefixes in this site, corresponding to one remote .json
+		roomData : {},
+		sitePrefixes : ["boho_a"] //list of room ID prefixes in this site, corresponding to one remote .json
 	},
 	"boho_b" : {
 		sitePlanRes : 'boho-b-floor-combined.svg',
-		etag : -1, //for caching
-		roomData : [],
-		sitePrefixes : [{'prefix':"boho_b", 'etag':-1}] //list of room ID prefixes in this site, corresponding to one remote .json
+		roomData : {},
+		sitePrefixes : ["boho_b"] //list of room ID prefixes in this site, corresponding to one remote .json
 	},
 	"boho_c" : {
 		sitePlanRes : 'boho-c-floor-combined.svg', 		
-		etag : -1, //for caching
-		roomData : [],
-		sitePrefixes : [{'prefix':"boho_c", 'etag':-1}] //list of room ID prefixes in this site, corresponding to one remote .json
+		roomData : {},
+		sitePrefixes : ["boho_c"] //list of room ID prefixes in this site, corresponding to one remote .json
 	},
 	"new_build-a" : {
 		sitePlanRes : 'new-build-a-stair_combined.svg',		
-		etag : -1, //for caching
-		roomData : [],
-		sitePrefixes : [{'prefix':"new_build_a", 'etag':-1}] //list of room ID prefixes in this site, corresponding to one remote .json
+		roomData : {},
+		sitePrefixes : ["new_build_a"] 
 	},
 	"new_build_e-f-g-h-i-j" : {
 		sitePlanRes : 'new-build-e-f-g-h-i-j-stair_combined.svg',
-		etag : -1, //for caching
-		roomData : [],
-		sitePrefixes : [{'prefix':"new_build_e", 'etag':-1},{'prefix':"new_build_f", 'etag':-1},{'prefix':"new_build_g", 'etag':-1},{'prefix':"new_build_h", 'etag':-1},{'prefix':"new_build_i", 'etag':-1},{'prefix':"new_build_j", 'etag':-1}] //list of room ID prefixes in this site, corresponding to one remote .json
+		roomData : {},
+		sitePrefixes : ["new_build_e", "new_build_f", "new_build_g", "new_build_h", "new_build_i", "new_build_j"]
 	},
 	"new_build_k-l-m-n-o-p" : {
 		sitePlanRes : 'new-build-k-l-m-n-o-p-stair_combined.svg',
-		etag : -1, //for caching
-		roomData : [],
-		sitePrefixes : [{'prefix':"new_build_k", 'etag':-1},{'prefix':"new_build_l", 'etag':-1},{'prefix':"new_build_m", 'etag':-1},{'prefix':"new_build_n", 'etag':-1},{'prefix':"new_build_o", 'etag':-1},{'prefix':"new_build_p", 'etag':-1}] //list of room ID prefixes in this site, corresponding to one remote .json
+		roomData : {},
+		sitePrefixes : ["new_build_k", "new_build_l", "new_build_m", "new_build_n", "new_build_o", "new_build_p"] 
 	},
 	"wyng_a" : {
 		sitePlanRes : 'wyng-a-floor-combined.svg',	
-		etag : -1, //for caching
-		roomData : [],
-		sitePrefixes : [{'prefix':"wyng_a", 'etag':-1}] //list of room ID prefixes in this site, corresponding to one remote .json
+		roomData : {},
+		sitePrefixes : ["wyng_a"] 
 	}, 
 	"wyng_b" : {
 		sitePlanRes : 'wyng-b-floor-combined.svg',
-		etag : -1, //for caching
-		roomData : [],
-		sitePrefixes : [{'prefix':"wyng_b", 'etag':-1}] //list of room ID prefixes in this site, corresponding to one remote .json
+		roomData : {},
+		sitePrefixes : ["wyng_b"] 
 	},
 	"wyng_c" : {
 		sitePlanRes : 'wyng-c-floor-combined.svg',
-		etag : -1, //for caching
-		roomData : [],
-		sitePrefixes : [{'prefix':"wyng_c", 'etag':-1}] //list of room ID prefixes in this site, corresponding to one remote .json
+		roomData : {},
+		sitePrefixes : ["wyng_c"] 
 	}, 
 	"wyng_d" : {
 		sitePlanRes : 'wyng-d-floor-combined.svg',
-		etag : -1, //for caching
-		roomData : [],
-		sitePrefixes : [{'prefix':"wyng_d", 'etag':-1}] //list of room ID prefixes in this site, corresponding to one remote .json
+		roomData : {},
+		sitePrefixes : ["wyng_d"]
 	},
 	"coote" : {
 		sitePlanRes : 'coote-house.svg',
-		roomData : [],
-		sitePrefixes : [{'prefix':"coote", 'etag':-1}]
+		roomData : {},
+		sitePrefixes : ["coote"]
 	}
 }
 
@@ -109,7 +97,6 @@ function loaded() {
 }
 
 function updateAll() {
-
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200) {
@@ -117,48 +104,52 @@ function updateAll() {
             updatedData(data)
         }
     }
-        
     request.open("GET", "data/data.json", true);
     request.send();
 }
 
-function updateSite(site) {
-	for (var i = 0; i < sites[site].sitePrefixes.length; i++) {
-		var sitePrefix = sites[site].sitePrefixes[i].prefix; //make a copy not a reference?
-		var httpRequest = new XMLHttpRequest();
-		httpRequest.onreadystatechange = function(request, site, prefixIndex) {
-			return function() {
-				var priorEtag = sites[site].sitePrefixes[prefixIndex].etag;
-				if (request.readyState == 4 && request.status == 200){ // && priorEtag != request.getResponseHeader("etag")) {
-					updatedData(site, JSON.parse(request.response));
-					sites[site].sitePrefixes[prefixIndex].etag = request.getResponseHeader("etag");
-				}
+// this gets called when we know the data has changed
+function updatedData(jsonData) {
+    for (let site in sites) {
+        let roomsUpdated = updateAndGetDifferencesFor(site, jsonData);
+		console.log("Rooms updated for site: " +site);
+		console.log(roomsUpdated);
+		if (Object.keys(roomsUpdated).length > 0) {
+			notify(roomsUpdated);
+			if (currentlySelected == site) {
+				updateSvgData(currentlySelected);
+			} else {
+				//var notifier = document.getElementById(site).getElementsByClassName("indicator")[0];
+				//notifier.style.backgroundColor = "blue";
+				//notifier.parentElement.title = "has changes";
 			}
-		} (httpRequest, site, i);
-		httpRequest.open("GET", "data/" + sitePrefix + ".json", true);
-		console.log("getting: data/" + sitePrefix +".json");
-		httpRequest.send();
-	}
+		}
+    }
 }
 
-// this gets called when we know the data has changed
-function updatedData(data) {
-    for (let site in data) {
-        site_data = data[site];
-        let roomsUpdated = updateAndGetDifferencesFor(site, roomsJSON);
-	console.log("Rooms updated for site: " +site);
-	console.log(roomsUpdated);
-	if (Object.keys(roomsUpdated).length > 0) {
-		notify(roomsUpdated);
-		if (currentlySelected == site) {
-			updateSvgData(currentlySelected);
-		} else {
-			//var notifier = document.getElementById(site).getElementsByClassName("indicator")[0];
-			//notifier.style.backgroundColor = "blue";
-			//notifier.parentElement.title = "has changes";
+
+function satisfiesPrefixes(roomId, prefixes) {
+	for (let prefix of prefixes) {
+		if (roomId.startsWith(prefix)) {
+			return true;
 		}
 	}
-    }
+	return false;
+}
+
+function updateAndGetDifferencesFor(site, newRoomsJSON) {
+	var changedRooms = {};
+	var requiredPrefixes = sites[site].sitePrefixes;
+	for (let roomId in newRoomsJSON) {
+		if (satisfiesPrefixes(roomId, requiredPrefixes)) {
+			room = newRoomsJSON[roomId];
+			if (!sites[site].roomData[roomId] || room.occupier != sites[site].roomData[roomId].occupier) {
+				sites[site].roomData[roomId] = room;
+				changedRooms[roomId] = room;
+			}
+		}
+	}
+	return changedRooms;
 }
 
 
@@ -168,38 +159,24 @@ function notify(roomDifferences) {
 	var newstatus = ""; //No idea if this help reduce number of variable allocations in javascript... probably optimizied away
 	var updatesPane = document.getElementById("updates_pane");
 
-	for (var room in roomDifferences) {
-		newstatus = roomDifferences[room].status;
+	for (var roomId in roomDifferences) {
+		room = roomDifferences[roomId];
+		newstatus = room.status;
 		if (newstatus == "occupied") {
 			var div = document.createElement("div")
 			div.setAttribute("class", "updates_row updates_taken");
-			div.innerHTML = roomDifferences[room].occupier  + " has taken " + roomDifferences[room].roomName;
+			div.innerHTML = room.occupier  + " has taken " + room.roomName;
 			updatesPane.insertBefore(div, updatesPane.firstChild);	
 		} else if (newstatus == "available") {
 			var div = document.createElement("div")
 			div.setAttribute("class", "updates_row updates_freed");
-			div.innerHTML = roomDifferences[room].roomName + " has become available";
+			div.innerHTML = room.roomName + " has become available";
 			updatesPane.insertBefore(div, updatesPane.firstChild);	
 		} else {
 			//do nothing because it's some odd case
 		}
 	}
 }
-
-
-function updateAndGetDifferencesFor(site, newRoomsJSON) {
-	var changedRooms = {};
-	//console.log(newRoomsJSON);
-	for (var r in newRoomsJSON) {
-		//console.log(r);
-		if (!sites[site].roomData[r] || newRoomsJSON[r].occupier != sites[site].roomData[r].occupier) {
-			sites[site].roomData[r] = newRoomsJSON[r];
-			changedRooms[r] = newRoomsJSON[r];
-		}
-	}
-	return changedRooms;
-}
-
 
 //only operates on the currently loaded svg
 function updateSvgData(s) {
@@ -260,6 +237,7 @@ function showTooltip(elem, site, room) {
 		var s = roomData.fullCost.split("\n");
 		document.getElementById("total_cost_1").innerHTML = s[0];
 		document.getElementById("total_cost_2").innerHTML = s[1];
+		document.getElementById("total_cost_3").innerHTML = s[2];
 	} else {
 		document.getElementById("total_cost_1").innerHTML = roomData.fullCost;
 		document.getElementById("total_cost_2").innerHTML="";

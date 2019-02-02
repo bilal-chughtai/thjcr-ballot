@@ -67,3 +67,15 @@ except Exception as e:
 
 
 print("\n\n***** You now need to run `live_update_server/server.py` pointing to the created directory `{0}` to get live updates on it *****".format(ballot_directory))
+print("""Partial command:\n \
+python3 -m live_update_server.server \
+--ballot-directory "{0}" \
+--google-API-credentials "{1}" \
+--google-doc-title "{2}" \
+--google-sheet-name [SHEETNAME] \
+--google-sheet-format [FORMAT FILE] \
+--room-svg-id-mapping [MAPPING FILE]""".format(
+    ballot_directory,
+    args.google_API_credentials,
+    args.google_doc_title.strip()
+))

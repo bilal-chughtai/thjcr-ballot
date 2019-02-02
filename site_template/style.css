@@ -188,7 +188,7 @@ Not having it as pixels prevents people from zooming in to see more detail I thi
 #tooltip .data {
 	float:right;
 	margin-left: 15px;
-	max-width:225px;
+	max-width:250px;
 	text-align: right;
 }
 
