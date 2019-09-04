@@ -42,7 +42,7 @@ python3 -m live_update_server.server
     --room-svg-id-mapping live_update_server/resources/room_id_mapping.csv
 ```
 
-## Tmux for live update server
+### Tmux for live update server
 You'll need to use `screen` or `tmux` to leave the live update server running while you're not logged in.
 I recommend `tmux`, especially since its available on the SRCF server as well.
 
@@ -60,4 +60,14 @@ To go back and shut down the server
 3. Kill the server (`CTRL + c`)
 4. Kill the tmux session: `tmux kill-session`
 5. Log out of the sever if you want.
+
+## Development
+
+This repo is pretty easy to develop on top of. Use your favourite IDE (I use PyCharm), and set up a virtual environment using Python 3.4. In a JetBrains IDE this is done via File > Settings > Project > Project Interpreter > [Cog Icon] > Ok
+
+Current planned additions:
+Keep Google Sheet Infra
+Add reading in of sheet containing timings
+figure out how to user expose an authenticated to select rooms in time slot and push these changes to the master sheet
+probably keep the reader (+visualiser) and writer processes seperate
 
