@@ -65,9 +65,10 @@ To go back and shut down the server
 
 This repo is pretty easy to develop on top of. Use your favourite IDE (I use PyCharm), and set up a virtual environment using Python 3.4. In a JetBrains IDE this is done via File > Settings > Project > Project Interpreter > [Cog Icon] > Ok. Then pip install requirements.txt and you should be able to run the above commands locally.
 
-Current planned additions:
-Retain google sheet infrastructure as it's "easy" in case we get a naff webmaster some year
-Add reading in of sheet containing timings
-figure out how to user expose an authenticated to select rooms in time slot and push these changes to the master sheet
-probably keep the reader (+visualiser) and writer processes seperate
+Current planned additions:  
+Retain google sheet infrastructure as it's "easy" in case we get a naff webmaster some year  
+Add reading in of sheet containing timings  
+figure out how to user expose an authenticated to select rooms in time slot and push these changes to the master sheet  
+probably keep the reader (+visualiser) and writer processes seperate 
+use django framework to user expose 
 
