@@ -63,6 +63,8 @@ class GoogleRoomDataParser(RoomDataParser):
 
     def _parse_sheet(self, gspread_sheet, name_column, columns_mapping, room_name_to_svg_id):
 
+        x=gspread_sheet.get_all_values()
+
         for row in gspread_sheet.get_all_values():
             room_name = row[name_column]
             # skip all invalid room names/unknown room names

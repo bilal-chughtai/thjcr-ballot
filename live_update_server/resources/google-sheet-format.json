@@ -1,7 +1,7 @@
 {
     "description": "The `sheet_columns_mapping` describes the google doc being read. The keys (left of `:`) are the items the program wants to extract from the sheet, the value (RHS of `:`) is the column number to get this value from. If not using a specific value, set the index to -1",
 
-    "sheet_columns_mapping": {
+    "room_sheet_columns_mapping": {
         "roomName" : 0,
         "roomType" : 1,
         "floor": 2,
@@ -12,5 +12,10 @@
         "crsid" : 7,
         "year" : 8,
         "license" : 9 
+    },
+
+    "users_sheet_columns_mapping": {
+        "CRSid" : 0,
+        "time" : 1
     }
 }

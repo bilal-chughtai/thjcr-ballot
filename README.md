@@ -8,7 +8,7 @@ Clone this repository to a NON-PUBLIC location on your server. If using SRCF and
 
 You'll also need to get a copy of the annotated floor plans (SVG) from myself or the prior webmaster, as well as the Google API secret credentials (private key), and put them somewhere _NON-PUBLIC_ (regarding floor plans, I'm not sure if they can be public, so this is just to play it safe). You may be able to find these private files on the SRCF server from the prior year. *Also change the permissions of the folder containing these documents so that only members of thjcr can read the folder*.
 
-1. Clone this repository to a non-public directory, obtain the annotated floor plan SVGs, and the Google API secret. Also install `gspread` and `oauth2client`: `pip3 install gspread oauth2client`
+1. Clone this repository to a non-public directory, obtain the annotated floor plan SVGs, and the Google API secret. Also install the requirements, pip install -r requirements.txt
 
 2. Share the ballot document google sheet with `gdoc-editor@thjcr-ballot-system.iam.gserviceaccount.com`, which gives this system access to the google doc.
 

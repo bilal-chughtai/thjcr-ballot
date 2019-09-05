@@ -4,24 +4,34 @@ import shutil
 
 from live_update_server.googlesheet import GoogleSheetReader
 
-parser = argparse.ArgumentParser(description="Create a copy of the ballot into a specified location. The files may then be updated by executing `live_update_server/server.py`, ")
-parser.add_argument("--ballot-directory", required=True, help="Path to currently active ballot where this script has write permissions", type=str)
-parser.add_argument("--google-API-credentials", required=True, help="Path to JSON file with the Google Drive API secret (aka credentials) that authorizes access google sheets that have been shared to the account", type=str)
-parser.add_argument("--no-delete-existing", dest="delete_existing", action="store_false", help="Don't delete existing ballot directory if present already")
-parser.add_argument("--delete-existing", dest="delete_existing", action="store_true", help="(default) delete existing ballot directory if present")
+parser = argparse.ArgumentParser(
+    description="Create a copy of the ballot into a specified location. The files may then be updated by executing `live_update_server/server.py`, ")
+parser.add_argument("--ballot-directory", required=True,
+                    help="Path to currently active ballot where this script has write permissions", type=str)
+parser.add_argument("--google-API-credentials", required=True,
+                    help="Path to JSON file with the Google Drive API secret (aka credentials) that authorizes access google sheets that have been shared to the account",
+                    type=str)
+parser.add_argument("--no-delete-existing", dest="delete_existing", action="store_false",
+                    help="Don't delete existing ballot directory if present already")
+parser.add_argument("--delete-existing", dest="delete_existing", action="store_true",
+                    help="(default) delete existing ballot directory if present")
 parser.set_defaults(delete_existing=True)
-parser.add_argument("--floor-plan-svgs-directory", required=True, help="Where to find all the SVGs to find required for the site - this isn't bundled with the Git repository because unsure whether these floorplans should be public. On the SRCF server place them somewhere non-public and in the ballot-site use a .htaccess to restrict access (default settings will be copied).")
-parser.add_argument("--google-doc-title", required=True, help="Exact name of the google doc to link the ballot site to.")
+parser.add_argument("--floor-plan-svgs-directory", required=True,
+                    help="Where to find all the SVGs to find required for the site - this isn't bundled with the Git repository because unsure whether these floorplans should be public. On the SRCF server place them somewhere non-public and in the ballot-site use a .htaccess to restrict access (default settings will be copied).")
+parser.add_argument("--google-doc-title", required=True,
+                    help="Exact name of the google doc to link the ballot site to.")
+
 
 def copy_and_update_index_file(source, dest, key):
-	fIn = open(source)
-	fOut = open(os.path.join(dest, 'index.html'), "w")
-	for line in fIn:
-		if "REPLACE_THIS_WITH_KEY" in line:
-			line = line.replace("REPLACE_THIS_WITH_KEY", key)
-		fOut.write(line)
-	fIn.close()
-	fOut.close()
+    fIn = open(source)
+    fOut = open(os.path.join(dest, 'index.html'), "w")
+    for line in fIn:
+        if "REPLACE_THIS_WITH_KEY" in line:
+            line = line.replace("REPLACE_THIS_WITH_KEY", key)
+        fOut.write(line)
+    fIn.close()
+    fOut.close()
+
 
 def delete_directory(pathstring):
     try:
@@ -55,7 +65,7 @@ try:
     print("Successfully copied scripts to {0}".format(ballot_directory))
     shutil.copy("site_template/.htaccess", ballot_directory)
     print("Successfully copied htaccess to {0}".format(ballot_directory))
-    copy_and_update_index_file("site_template/index.html",  ballot_directory, google_doc_id)
+    copy_and_update_index_file("site_template/index.html", ballot_directory, google_doc_id)
     print("Successfully copied & updated index to {0}".format(ballot_directory))
     # target folder of target/plans may not exist before
     shutil.copytree(args.floor_plan_svgs_directory, os.path.join(ballot_directory, "plans"))
@@ -65,8 +75,9 @@ except Exception as e:
     print(e)
     pass
 
-
-print("\n\n***** You now need to run `live_update_server/server.py` pointing to the created directory `{0}` to get live updates on it *****".format(ballot_directory))
+print(
+    "\n\n***** You now need to run `live_update_server/server.py` pointing to the created directory `{0}` to get live updates on it *****".format(
+        ballot_directory))
 print("""Partial command:\n \
 python3 -m live_update_server.server \
 --ballot-directory "{0}" \
