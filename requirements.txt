@@ -1,4 +1,8 @@
+wtforms
 argparse
 gspread
 oauth2client
 datetime
+flask
+python-dotenv
+flask-wtf
