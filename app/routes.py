@@ -12,7 +12,7 @@ def index():
     if current_user.is_authenticated:
         user = {'username': current_user.CRSid}
     else:
-        user= {'username': "please log in"}
+        user = {'username': "please log in"}
     posts = [
         {
             'author': {'username': 'John'},
@@ -54,11 +54,15 @@ def check_crsid_valid(): #TODO maybe move this function elsewhere, remove hardco
     if CRSid in user_list.keys():
         user=User(CRSid)
         login_user(user)
-        redirect(url_for('index'))
+        return url_for('index')
     else:
-        return render_template('invalid_user.html', CRSid=CRSid)
+        return url_for('invalid_user', CRSid=CRSid)
 
 
+
+@app.route('/invalid_user')
+def invalid_user():
+    return render_template('invalid_user.html', CRSid=request.args['CRSid'])
 
 
        # return redirect(x)
@@ -68,11 +72,11 @@ def check_crsid_valid(): #TODO maybe move this function elsewhere, remove hardco
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if "WLS-Response" in request.url:
-        check_crsid_valid()
-    if current_user.is_authenticated:
+        return redirect(check_crsid_valid())
+    elif current_user.is_authenticated:
         return redirect(url_for('index'))
-    
-    return redirect(raven_request())
+    else:
+        return redirect(raven_request())
 
 
 
