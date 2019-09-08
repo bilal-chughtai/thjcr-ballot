@@ -18,7 +18,7 @@ from .errors import RavenError
 from .helpers import is_auth_request, remove_query_arg
 from .resource import RavenRequest, RavenResponse
 
-__all__ = ['raven_auth']
+__all__ = ['raven_auth','raven_request']
 
 
 def raven_auth(session, request):
@@ -39,23 +39,23 @@ def raven_auth(session, request):
 
         raven_response = request.args.get("WLS-Response")
 
-        #try:
-        raven_response = RavenResponse(raven_response)
-        session['_raven'] = raven_response.principal
-        #return redirect(remove_query_arg(), code=303)
-        print("bruh2")
-        return url_for('index'), raven_response.principal
-        #except RavenError:
-           # abort(400)
+        try:
+            raven_response = RavenResponse(raven_response)
+            return raven_response.principal
+        except RavenError:
+            abort(400)
 
     # Check if user is already logged in
-    if ('_raven' in session and session['_raven'] is not None
-            and len(session['_raven']) > 1):
-        return url_for('index'), ''
-    else:
-        session['_raven'] = ''
-        raven_request = RavenRequest()
+    #if ('_raven' in session and session['_raven'] is not None
+           # and len(session['_raven']) > 1):
+        #return url_for('index'), ''
+    #else:
+     #   session['_raven'] = ''
+       # raven_request = RavenRequest()
         #return redirect(raven_request.redirect_url, code=303)
-        return raven_request.redirect_url, ''
+       # return raven_request.redirect_url, ''
         #return redirect(url_for('index'))
 
+def raven_request():
+    _raven_request = RavenRequest()
+    return _raven_request.redirect_url
