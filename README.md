@@ -66,9 +66,16 @@ To go back and shut down the server
 This repo is pretty easy to develop on top of. Use your favourite IDE (I use PyCharm), and set up a virtual environment using Python 3.4. In a JetBrains IDE this is done via File > Settings > Project > Project Interpreter > [Cog Icon] > Ok. Then pip install requirements.txt and you should be able to run the above commands locally.
 
 Current planned additions:  
-Retain google sheet infrastructure as it's "easy" in case we get a naff webmaster some year  
-Add reading in of sheet containing timings  
-figure out how to user expose an authenticated to select rooms in time slot and push these changes to the master sheet  
-probably keep the reader (+visualiser) and writer processes seperate 
-use django framework to user expose 
+Migrate web wrapper to flask/django in progress
+Get raven auth working / running on windows done!
+Make it look better
+Allow users to input groups into a similar system, and write a script to generate the timings for us (low priority as this is quite easy to do manually)
+Allow users to allocate a proxy if they are busy
+Allow users to queue up rooms in order of preference
+(Harder) “Suggested rooms”
+Filter drop down that highlights rooms in the svg pertaining to certain categories (price/ensuite etc)
+Email notifications
+Document how to add new rooms to the system
+Add a persistent review system - calculates average ratings / text input - get users to fill out before balloting, remembers their room from last year
+ 
 
