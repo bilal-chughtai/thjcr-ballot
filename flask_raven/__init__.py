@@ -21,14 +21,15 @@ from .resource import RavenRequest, RavenResponse
 __all__ = ['raven_auth','raven_request']
 
 
-def raven_auth(session, request):
+def raven_auth(request):
     # Check if this is an authentication request
     if is_auth_request():
 
         # Cookies are either disabled or not configured properly
         # in flask, we are aborting to prevent a redirect loop
-        if '_raven' not in session:
-            abort(403)
+       # if '_raven' not in session:
+        #    print(session)
+         #   abort(403)
 
         # Auth requests MUST be get requests
         if request.method != 'GET':

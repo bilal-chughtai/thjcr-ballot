@@ -2,15 +2,15 @@ from app import app
 from flask import render_template,flash,redirect, url_for, session, request
 from app.forms import LoginForm
 from flask_raven import raven_auth, raven_request
-from flask_login import current_user, login_user
+from flask_login import current_user, login_user, login_required
 from app.models import User
 import json
 
 @app.route('/')
-@app.route('/index')
+@app.route('/')
 def index():
     if current_user.is_authenticated:
-        user = {'username': current_user.CRSid}
+        user = {'username': current_user.id}
     else:
         user = {'username': "please log in"}
     posts = [
@@ -25,6 +25,13 @@ def index():
     ]
     return render_template('index.html', title='Home', user=user)
 
+@app.route('/home')
+@login_required
+def home():
+    current_user.refresh()
+    return render_template('home.html', user_data=current_user.user_data, crsid=current_user.id)
+
+@app.route('/home')
 
 
 # @app.route('/login', methods=['GET', 'POST'])
@@ -47,32 +54,34 @@ def index():
     # return render_template('login.html', title='Sign In', form=form)
 
 #@app.errorhandler(400) #hacky fix for redirect post raven log in button
-def check_crsid_valid(): #TODO maybe move this function elsewhere, remove hardcoding of ballot
-    CRSid = raven_auth(session, request)
+def check_crsid_valid(request): #TODO maybe move this function elsewhere, remove hardcoding of ballot
+    crsid = raven_auth(request)
+    print(crsid)
     with open('ballots/testballot/data/users.json','r') as users:
         user_list = json.load(users)
-    if CRSid in user_list.keys():
-        user=User(CRSid)
+    if crsid in user_list.keys():
+        user = User(crsid)
         login_user(user)
         return url_for('index')
     else:
-        return url_for('invalid_user', CRSid=CRSid)
+        return url_for('invalid_user', crsid=crsid)
 
 
 
 @app.route('/invalid_user')
 def invalid_user():
-    return render_template('invalid_user.html', CRSid=request.args['CRSid'])
+    return render_template('invalid_user.html', crsid=request.args['crsid'])
 
 
        # return redirect(x)
   #  else:
      #   return redirect("/index")
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET'])
 def login():
+
     if "WLS-Response" in request.url:
-        return redirect(check_crsid_valid())
+        return redirect(check_crsid_valid(request))
     elif current_user.is_authenticated:
         return redirect(url_for('index'))
     else:
