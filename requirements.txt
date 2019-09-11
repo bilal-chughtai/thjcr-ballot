@@ -6,3 +6,5 @@ datetime
 flask
 python-dotenv
 flask-wtf
+flask_login
+pycryptodome

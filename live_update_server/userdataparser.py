@@ -1,6 +1,6 @@
 #TODO: make this not a copy pasted roomdataparser
 class UserDataParser:
-    """ Reads a Google Sheet containing users and returns a dictionary of form crsid: dict of attributes """
+    """ Reads a Google Sheet containing data and returns a dictionary of form crsid: dict of attributes """
 
     def __init__(self, gspread_sheet, sheet_columns_mapping, logger):
         self._logger = logger

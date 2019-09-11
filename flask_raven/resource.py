@@ -11,7 +11,7 @@ from datetime import datetime
 
 from flask import request
 
-from Crypto.Hash.SHA import SHA1Hash
+from Crypto.Hash import SHA1
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
 
@@ -181,7 +181,7 @@ class RavenResponse(object):
     def check_signature(self):
         key = RSA.importKey(get_key())
         self.payload.encode('utf-8')
-        mhash = SHA1Hash(self.payload.encode('utf-8'))
+        mhash = SHA1.new(self.payload.encode('utf-8'))
         verifier = PKCS1_v1_5.new(key)
 
         if not verifier.verify(mhash, self.sig):

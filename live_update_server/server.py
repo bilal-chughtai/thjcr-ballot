@@ -27,7 +27,7 @@ parser.add_argument("--google-doc-title", required=True, help="Exact name of the
 parser.add_argument("--google-sheet-name", required=True, help="Name of the single sheet on the Google doc to read updates from", type=str)
 parser.add_argument("--google-sheet-format", required=True, help="Path to JSON file that defines the mapping of columns when reading document updates", type=str)
 parser.add_argument("--room-svg-id-mapping", required=True, help="Path to CSV file mapping SVG file room id to the name used in the Google Sheet", type=str)
-parser.add_argument("--user-sheet-name", required=True, help="Name of the google sheet mapping containing all system users", type=str)
+parser.add_argument("--user-sheet-name", required=True, help="Name of the google sheet mapping containing all system data", type=str)
 
 args = parser.parse_args()
 
@@ -81,13 +81,13 @@ user_data={}
 while True:
     print("Polling sheet")
 
-    # parse the users sheet into a local data format
+    # parse the data sheet into a local data format
     users_sheet = sheet_reader.get_sheet(doc_title, users_sheet_name)
     new_user_data_object = UserDataParser(users_sheet, users_sheet_columns_format, logger)
     new_user_data = new_user_data_object._parsed_users
 
     if new_user_data != user_data:
-        print("change in users detected")
+        print("change in data detected")
         # if so, save it
         user_data = new_user_data
         # convert local data format into JSON to send over write to file
