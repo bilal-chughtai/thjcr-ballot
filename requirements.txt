@@ -8,3 +8,5 @@ python-dotenv
 flask-wtf
 flask_login
 pycryptodome
+flask-sqlalchemy
+flask-migrate
