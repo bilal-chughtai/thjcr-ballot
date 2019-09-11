@@ -1,4 +1,4 @@
-from live_update_server.roomdataparser import RoomDataParser
+from app.gsheet_tools.roomdataparser import RoomDataParser
 
 class RoomDataFormatter():
     """ Consumes a known shape of Room data and produces json expected on the client side """
@@ -17,7 +17,7 @@ class RoomDataFormatter():
             info['occupierCrsid'] = attrs['crsid']
             info['roomPrice'] = RoomDataFormatter._get_weekly_rent(attrs)
             info['contractType'] = attrs['license']
-            info['roomType'] = attrs['roomType']
+            info['room_type'] = attrs['roomType']
             info['fullCost'] = RoomDataFormatter._get_full_cost_string(attrs)
             info['floor'] = attrs['floor']
             info['notes'] = attrs['notes']

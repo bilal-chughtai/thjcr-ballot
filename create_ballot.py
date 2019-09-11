@@ -2,10 +2,10 @@ import os
 import argparse
 import shutil
 
-from live_update_server.googlesheet import GoogleSheetReader
+from app.gsheet_tools.googlesheet import GoogleSheetReader
 
 parser = argparse.ArgumentParser(
-    description="Create a copy of the ballot into a specified location. The files may then be updated by executing `live_update_server/server.py`, ")
+    description="Create a copy of the ballot into a specified location. The files may then be updated by executing `gsheet_tools/server.py`, ")
 parser.add_argument("--ballot-directory", required=True,
                     help="Path to currently active ballot where this script has write permissions", type=str)
 parser.add_argument("--google-API-credentials", required=True,
@@ -76,10 +76,10 @@ except Exception as e:
     pass
 
 print(
-    "\n\n***** You now need to run `live_update_server/server.py` pointing to the created directory `{0}` to get live updates on it *****".format(
+    "\n\n***** You now need to run `gsheet_tools/server.py` pointing to the created directory `{0}` to get live updates on it *****".format(
         ballot_directory))
 print("""Partial command:\n \
-python3 -m live_update_server.server \
+python3 -m gsheet_tools.server \
 --ballot-directory "{0}" \
 --google-API-credentials "{1}" \
 --google-doc-title "{2}" \

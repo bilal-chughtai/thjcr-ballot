@@ -1,18 +1,17 @@
 #! /usr/bin/python
 
 import argparse
-from datetime import datetime
 import time
 import os
 import json
 
-from live_update_server.utils import NonRepeatingLogger
-from live_update_server.googlesheet import GoogleSheetReader
+from app.gsheet_tools.utils import NonRepeatingLogger
+from app.gsheet_tools.googlesheet import GoogleSheetReader
 # TODO decide better file naming for the following three
-from live_update_server.roomdataparser import GoogleRoomDataParser,DummyRoomDataParser
-from live_update_server.roomdataformatter import RoomDataFormatter
-from live_update_server.nametosvgid import RoomNameToSvgId
-from live_update_server.userdataparser import UserDataParser
+from app.gsheet_tools.roomdataparser import GoogleRoomDataParser,DummyRoomDataParser
+from app.gsheet_tools.roomdataformatter import RoomDataFormatter
+from app.gsheet_tools.nametosvgid import RoomNameToSvgId
+from app.gsheet_tools.userdataparser import UserDataParser
 # from .utils import NonRepeatingLogger
 # from .googlesheet import GoogleSheetReader
 # from .roomdataparser import RoomDataParser
@@ -100,6 +99,11 @@ while True:
     # parse the rooms sheet to into a local data format
     room_sheet = sheet_reader.get_sheet(doc_title, room_sheet_name)
     new_rooms = GoogleRoomDataParser(room_sheet, rooms_sheet_columns_format, room_name_to_svg_id.names_to_ids(), logger)
+
+    jsondumprawdata = new_rooms.get_parsed_rooms()
+
+    with open('rawdata.json', 'w') as outfile:
+        json.dump(jsondumprawdata, outfile)
 
     # see if it's different from what we parsed before
     if new_rooms != rooms:

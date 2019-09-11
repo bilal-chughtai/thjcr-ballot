@@ -2,7 +2,6 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
 from datetime import datetime
-from live_update_server.utils import parse_gspread_date
 
 
 class GoogleSheetReader():

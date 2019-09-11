@@ -30,7 +30,6 @@ class User(UserMixin, db.Model):
     first_name = db.Column(db.String, index=True)
     surname = db.Column(db.String, index=True)
     year = db.Column(db.Integer, index=True)
-    #current_room = db.Column(db.String, index=True)
     ballot_slot = db.Column(db.DateTime, index=True)
     ballot_position = db.Column(db.Integer, index=True)
     ballot = db.relationship('Ballot', primaryjoin="User.id == Ballot.crsid", backref=db.backref("balloting_user", uselist=False))
@@ -49,23 +48,14 @@ class Ballot(db.Model):
     room = db.relationship('Room', primaryjoin="Ballot.room_id == Room.id", backref=db.backref("associated_ballot", uselist=False))
 
 
-class Site(db.Model):
-    """
-    Defines a site in which a room may live
-    1-Many with Room
-    """
-    id = db.Column(db.String, primary_key=True)
-    site = db.Column(db.String)
-
-
 class Room(db.Model):
     """
     Defines a room
     many-1 with Site
     """
     id = db.Column(db.String, primary_key=True)
-    site_id = db.Column(db.Integer, db.ForeignKey('site.id'))
-    site = db.relationship('Site', primaryjoin="Room.site_id == Site.id", backref="rooms")
+    friendly_name = db.Column(db.String, index=True)
+    site = db.Column(db.String, index=True)
     type = db.Column(db.String, index=True)
     floor = db.Column(db.Integer, index=True)
     notes = db.Column(db.String)
