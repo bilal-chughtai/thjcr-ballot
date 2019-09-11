@@ -77,4 +77,4 @@ class Admins(db.Model):
 
 @login.user_loader
 def load_user(crsid):
-    return User(crsid)
+    return User.query.get(crsid)

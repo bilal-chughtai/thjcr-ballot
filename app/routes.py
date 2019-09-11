@@ -18,8 +18,7 @@ def index():
 @app.route('/home')
 @login_required
 def home():
-    current_user.refresh()
-    return render_template('home.html', user_data=current_user.user_data, crsid=current_user.id)
+    return render_template('home.html', name=current_user.first_name + ' ' + current_user.surname, position=str(current_user.ballot_position), ballot_slot=current_user.ballot_slot, crsid=current_user.id)
 
 
 
@@ -46,10 +45,8 @@ def home():
 def check_crsid_valid(request): #TODO maybe move this function elsewhere, remove hardcoding of ballot
     crsid = raven_auth(request)
     print(crsid)
-    with open('ballots/testballot/data/users.json','r') as users:
-        user_list = json.load(users)
-    if crsid in user_list.keys():
-        user = User(crsid)
+    user=User.query.filter_by(id=crsid).first()
+    if user is not None:
         login_user(user)
         return url_for('index')
     else:

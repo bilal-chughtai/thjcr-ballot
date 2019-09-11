@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Hi, {{ crsid }} {{user_data.name}} {{user_data.surname}}!</h1>
-    <h1>Your slot is at {{user_data.time}} on {{user_data.date}}</h1>
-    <h1>Your current room is at {{user_data.currentRoom}}; consider leaving a review?</h1>
+    <h1>Hi, {{ crsid }} - {{name}} !</h1>
+    <h1>Your slot is at {{ballot_slot}} and your position in the ballot is {{position}}</h1>
     <a href="{{ url_for('submit_ballot') }}">Ballot Form</a>
 {% endblock %}
