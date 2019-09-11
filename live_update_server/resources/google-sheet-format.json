@@ -15,7 +15,12 @@
     },
 
     "users_sheet_columns_mapping": {
-        "CRSid" : 0,
-        "time" : 1
+        "crsid" : 0,
+        "name" : 1,
+        "surname": 2,
+        "year": 3,
+        "currentRoom" : 4,
+        "date" : 5,
+        "time" : 6
     }
 }

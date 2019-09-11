@@ -115,4 +115,4 @@ while True:
             json.dump(json_room_data, outfile)
     
     # since this is only 1 connection, we can poll often
-    time.sleep(3)
+    time.sleep(2)
