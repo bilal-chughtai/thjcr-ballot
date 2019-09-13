@@ -10,7 +10,7 @@ with open('rawdata.json') as file:
 
 rooms=[]
 
-#create a room model for each room in the json
+#create a room model for each room in the json TODO: make this update or add
 for key,room in room_data.items():
 
     rooms.append(Room(id=key, friendly_name=room['roomName'], site=room['roomName'].split()[0], type=room['roomType'], floor=room['floor'], notes=room['notes'], weekly_rent=room['weeklyRent']))
