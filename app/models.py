@@ -32,7 +32,7 @@ class User(UserMixin, db.Model):
     year = db.Column(db.Integer, index=True)
     ballot_slot = db.Column(db.DateTime, index=True)
     ballot_position = db.Column(db.Integer, index=True) #set to 0 if not balloting this year
-    reviews = db.relationship('User', primaryjoin="User.id == Review.author_crsid", backref=db.backref("author"))
+    reviews = db.relationship('Review', primaryjoin="User.id == Review.author_crsid", backref=db.backref("author"))
     ballots = db.relationship('Ballot', primaryjoin="Ballot.crsid == User.id", backref=db.backref("user"))
 
 
@@ -82,8 +82,8 @@ class Review(db.Model):
     """
     id = db.Column(db.Integer, primary_key=True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow, index=True)
-    author_crsid = db.Column(db.String, db.ForeignKey('User.id'), index=True)
-    room_id = db.Column(db.String, db.ForeignKey('Room.id'), index=True)
+    author_crsid = db.Column(db.String, db.ForeignKey('user.id'), index=True)
+    room_id = db.Column(db.String, db.ForeignKey('room.id'), index=True)
     text = db.Column(db.String)
     size = db.Column(db.Integer, index=True)
     noise = db.Column(db.Integer, index=True)
@@ -99,9 +99,9 @@ class Image(db.Model):
     many-1 with room
     """
     id = db.Column(db.Integer, primary_key=True)
-    author_crsid = db.Column(db.String, db.ForeignKey('User.id'), index=True)
+    author_crsid = db.Column(db.String, db.ForeignKey('user.id'), index=True)
     room_id = db.Column(db.String, db.ForeignKey('room.id'), index=True)
-    review_id = db.Column(db.Integer, db.ForeignKey('Review.id'), index=True) #set to 0 if independent of review
+    review_id = db.Column(db.Integer, db.ForeignKey('review.id'), index=True) #set to 0 if independent of review
     filename = db.Column(db.String)
 
 
@@ -111,10 +111,10 @@ class Admins(db.Model):
     1-1 with user
     """
     id = db.Column(db.Integer, primary_key=True)
-    crsid = db.Column(db.Integer, db.ForeignKey('user.id'))
+    crsid = db.Column(db.String, db.ForeignKey('user.id'))
     role = db.Column(db.String)
-    user = db.relationship('User', primaryjoin="Admins.crsid==User.id", backref="admin")
+    user = db.relationship('User', primaryjoin="admins.crsid==user.id", backref="admin")
 
 @login.user_loader
 def load_user(crsid):
-    return User.query.get(crsid)
+    return User.query.get(id=crsid)

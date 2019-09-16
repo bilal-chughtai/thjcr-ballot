@@ -22,46 +22,20 @@ def home():
 
 
 
-# @app.route('/login', methods=['GET', 'POST'])
-# #@raven_auth()
-# def login():
-#
-#     x,y = raven_auth(session,request)
-#
-#     print(y)
-#
-#     session['_raven'] = y
-#
-#     return redirect(x)
-
-    # form = LoginForm()
-    # if form.validate_on_submit():
-    #     flash('Login requested for user {}, remember_me={}'.format(
-    #         form.username.data, form.remember_me.data))
-    #     return redirect(url_for('index'))
-    # return render_template('submit_ballot.html', title='Sign In', form=form)
-
-#@app.errorhandler(400) #hacky fix for redirect post raven log in button
 def check_crsid_valid(request): #TODO maybe move this function elsewhere, remove hardcoding of ballot
     crsid = raven_auth(request)
     print(crsid)
-    user=User.query.filter_by(id=crsid).first()
+    user = User.query.filter_by(id=crsid).first()
     if user is not None:
         login_user(user)
         return url_for('index')
     else:
         return url_for('invalid_user', crsid=crsid)
 
-
-
 @app.route('/invalid_user')
 def invalid_user():
     return render_template('invalid_user.html', crsid=request.args['crsid'])
 
-
-       # return redirect(x)
-  #  else:
-     #   return redirect("/index")
 
 @app.route('/login', methods=['GET'])
 def login():
@@ -75,8 +49,13 @@ def login():
 
 @app.route('/submit_ballot', methods=['GET', 'POST'])
 def submit_ballot():
+
+    # the idea is you cant access this page until your slot - hence loading in data and passing it to the form for
+    # displaying / validation should be ok>??? TODO
+
     form = BallotForm()
     if form.validate_on_submit():
+        #check ballot is valid
         flash('Ballot processed')
         return redirect(url_for("home"))
     return render_template('submit_ballot.html', title='Submit Ballot', form=form)
