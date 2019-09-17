@@ -11,14 +11,15 @@ import json
 def index():
     if current_user.is_authenticated:
         return redirect(url_for("home"))
-        user = {'username': current_user.id}
     else:
         return render_template('welcome.html', title='Home')
 
 @app.route('/home')
 @login_required
 def home():
-    return render_template('home.html', name=current_user.first_name + ' ' + current_user.surname, position=str(current_user.ballot_position), ballot_slot=current_user.ballot_slot, crsid=current_user.id)
+    return render_template('home.html', name=current_user.first_name + ' ' + current_user.surname,
+                           position=str(current_user.ballot_position), ballot_slot=current_user.ballot_slot,
+                           crsid=current_user.id)
 
 
 

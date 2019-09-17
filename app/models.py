@@ -33,7 +33,7 @@ class User(UserMixin, db.Model):
     ballot_slot = db.Column(db.DateTime, index=True)
     ballot_position = db.Column(db.Integer, index=True) #set to 0 if not balloting this year
     reviews = db.relationship('Review', primaryjoin="User.id == Review.author_crsid", backref=db.backref("author"))
-    ballots = db.relationship('Ballot', primaryjoin="Ballot.crsid == User.id", backref=db.backref("user"))
+    #ballots = db.relationship('Ballot', primaryjoin="Ballot.crsid == User.id", backref=db.backref("user"))
 
 
 class Ballot(db.Model):
@@ -113,8 +113,8 @@ class Admins(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     crsid = db.Column(db.String, db.ForeignKey('user.id'))
     role = db.Column(db.String)
-    user = db.relationship('User', primaryjoin="admins.crsid==user.id", backref="admin")
+    user = db.relationship('User', primaryjoin="Admins.crsid==User.id", backref="admin")
 
 @login.user_loader
 def load_user(crsid):
-    return User.query.get(id=crsid)
+    return User.query.get(crsid)
