@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
-from app.models import Ballot, User
+from app.models import Ballot, User, Room
 
 
 class BallotForm(FlaskForm):
@@ -16,7 +16,7 @@ class BallotForm(FlaskForm):
             return False
 
         # checks room hasn't been taken
-        ballots_for_room = Ballot.query.filter_by(friendlyName=self.room_name.data)
+        ballots_for_room = Ballot.query.filter_by(room_id=Room.query.filter_by(friendly_name=self.room_name.data).first())
         for ballot in ballots_for_room:
             if ballot.for_year == self.for_year.data:
                 self.room_name.errors.append('Room ' + self.room_name.data + ' for year ' + self.for_year.data + ' has been taken by ' + ballot.crsid)
