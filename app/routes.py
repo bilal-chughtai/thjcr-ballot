@@ -1,9 +1,9 @@
-from app import app
+from app import app, db
 from flask import render_template,flash,redirect, url_for, session, request
 from app.forms import BallotForm
 from flask_raven import raven_auth, raven_request
 from flask_login import current_user, login_user, login_required
-from app.models import User
+from app.models import User, Ballot, Room
 import json
 
 @app.route('/')
@@ -54,10 +54,15 @@ def submit_ballot():
     # the idea is you cant access this page until your slot - hence loading in data and passing it to the form for
     # displaying / validation should be ok>??? TODO
 
-    form = BallotForm()
+    form = BallotForm(crsid=current_user.id)
     if form.validate_on_submit():
-        #check ballot is valid
+        #check ballot is valid - all occurs in the Form class
+        room_id = Room.query.filter_by(friendly_name=form.room_name.data).first().id # gets the room_id
+        ballot = Ballot(crsid=current_user.id, room_id=room_id, for_year=form.for_year.data)
+        db.session.add(ballot)
+        db.session.commit()
         flash('Ballot processed')
+
         return redirect(url_for("home"))
     return render_template('submit_ballot.html', title='Submit Ballot', form=form)
 

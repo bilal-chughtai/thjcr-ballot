@@ -1,4 +1,6 @@
 #this should live in create ballot
+#C:\Code\thjcr-ballot>python gsheet_to_database.py --ballot-directory "ballots/testballot" --google-API-credentials "google-credentials.json" --google-doc-title "testballot" --google-sheet-name publicdata --google-sheet-format app/gsheet_tools/resources/google-sheet-format.json --room-svg-id-mapping app/gsheet_tools/resources/room_id_mapping.csv --user-sheet-name timings
+#
 
 # ! /usr/bin/python
 
@@ -76,6 +78,8 @@ except OSError:
 data_file_path = os.path.join(args.ballot_directory, "data", "data.json")
 user_file_path = os.path.join(args.ballot_directory, "data", "users.json")
 
+logfile = "server_log_{0}.log".format(args.google_sheet_name)
+logger = NonRepeatingLogger(logfile, sort_by_most_recent=False)
 
 # fun add on functionality to maintain order of updates bar
 def put_updated_rooms_timestamps(new_rooms, old_rooms):
@@ -117,14 +121,22 @@ with open('rawdata.json') as file:
 
 new_rooms=[]
 
-#create a room model for each room in the json TODO: make this update or add
-db_rooms = db.session.query(Room.id)
+#create a room model for each room in the json TODO: add an argument to delete all entries
+db_rooms_tuples = db.session.query(Room.id).all() #gets all known rooms, .get returns a tuple
+db_rooms = [room[0] for room in db_rooms_tuples]
 for id,room in room_data.items():
     if id in db_rooms:
         updated_room = Room.query.get(id)
-        updated_room.update(id=key, friendly_name=room['roomName'], site=room['roomName'].split()[0], type=room['roomType'], floor=room['floor'], notes=room['notes'], weekly_rent=room['weeklyRent'])
+        updated_room.friendly_name=room['roomName']
+        updated_room.site=room['roomName'].split()[0]
+        updated_room.type=room['roomType']
+        updated_room.floor=room['floor']
+        updated_room.notes=room['notes']
+        updated_room.weekly_rent=room['weeklyRent']
+        print(id)
     else:
-        new_rooms.append(Room(id=key, friendly_name=room['roomName'], site=room['roomName'].split()[0], type=room['roomType'], floor=room['floor'], notes=room['notes'], weekly_rent=room['weeklyRent']))
+        new_rooms.append(Room(id=id, friendly_name=room['roomName'], site=room['roomName'].split()[0], type=room['roomType'], floor=room['floor'], notes=room['notes'], weekly_rent=room['weeklyRent']))
+print(new_rooms)
 db.session.bulk_save_objects(new_rooms)
 db.session.commit()
 
@@ -132,14 +144,19 @@ with open('userdata.json') as file:
     user_data = json.load(file)
 
 new_users=[]
-db_users = db.session.query(User.id)
+db_users_tuples = db.session.query(User.id).all() #gets all known users, .get returns a tuple
+db_users = [user[0] for user in db_users_tuples]
 for id,user in user_data.items():
     slot = datetime.strptime(user['date'] + ' ' + user['time'], '%d/%m/%Y %H:%M')
     if id in db_users:
         updated_user = User.query.get(id)
-        updated_user.update(id=key, first_name=user['name'], surname=user['surname'], year=int(user['year']), ballot_slot=slot, ballot_position=int(user['position']))
+        updated_user.first_name=user['name']
+        updated_user.surname=user['surname']
+        updated_user.year=int(user['year'])
+        updated_user.ballot_slot=slot
+        updated_user.ballot_position=int(user['position'])
     else:
-        new_users.append(User(id=key, first_name=user['name'], surname=user['surname'], year=int(user['year']), ballot_slot=slot, ballot_position=int(user['position'])))
+        new_users.append(User(id=id, first_name=user['name'], surname=user['surname'], year=int(user['year']), ballot_slot=slot, ballot_position=int(user['position'])))
 db.session.bulk_save_objects(new_users)
 db.session.commit()
 
